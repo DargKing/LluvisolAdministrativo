@@ -1,16 +1,19 @@
 import React, { useId, useEffect } from 'react'
-import { HeaderTable, RowTable } from '../interfaces/UI-types'
+import { ButtonGroupOptions, HeaderTable, RowTable } from '../interfaces/UI-types'
 import Loop from './Loop'
+import ButtonGroup from './ButtonGroup'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-export default function Table({ loading, data, header, id }: { loading?: boolean, data: RowTable[], header: HeaderTable, id: string }) {
+export default function Table({ loading, data, header, id, buttonGroup }: { loading?: boolean, data: any[], header: HeaderTable, id: string | number, buttonGroup: ButtonGroupOptions[] }) {
   const idTablaCarga = useId()
   const animationDurationInMs = 600
-  
+
   useEffect(() => {
     const inter = setInterval(() => {
       const rowsLoading = document.getElementById("tablaDeCarga" + idTablaCarga)?.children
 
-      if(rowsLoading?.length == 0){
+      if (rowsLoading?.length == 0) {
         clearInterval(inter)
       }
 
@@ -52,7 +55,7 @@ export default function Table({ loading, data, header, id }: { loading?: boolean
         rowsLoading?.item(4)?.classList.remove("animate-pulse")
       }, animationDurationInMs * 2.2)
 
-    
+
     }, animationDurationInMs * 2.3)
 
     return () => {
@@ -64,12 +67,12 @@ export default function Table({ loading, data, header, id }: { loading?: boolean
     return (<table className='table-fixed w-full border border-gray-700 rounded'>
       <tbody id={"tablaDeCarga" + idTablaCarga}>
         <Loop from={0} to={5}>
-        <tr className={"[animation-duration:600ms] odd:bg-slate-500 even:bg-slate-400"}>
-          <Loop from={0} to={4}>
-            <th className='border border-gray-700 h-7'>
-            </th>
-          </Loop>
-        </tr>
+          <tr className={"[animation-duration:600ms] odd:bg-slate-500 even:bg-slate-400"}>
+            <Loop from={0} to={4}>
+              <th className='border border-gray-700 h-7'>
+              </th>
+            </Loop>
+          </tr>
         </Loop>
       </tbody>
     </table>)
@@ -88,16 +91,33 @@ export default function Table({ loading, data, header, id }: { loading?: boolean
             if (index % 2 == 0) {
               return (
                 <tr key={"filaTabla" + id + index} className='bg-slate-400'>
-                  {row.columns.map((column, index) => {
-                    return (<th key={"columnaTabla" + id + index} className='border border-gray-700'>{column.label}</th>)
+                  {header.keyName.map((key, index) => {
+                    return (
+                      <th key={"columnaTabla" + id + index} className='border border-gray-700'>{row[key]}</th>
+                    )
                   })}
+                  {
+                    buttonGroup.length > 0 &&
+                    <th className='border border-gray-700'>
+                      <ButtonGroup id={row.id ?? index} buttonList={buttonGroup} equalPadding={true} />
+                    </th>
+                  }
                 </tr>)
             } else {
               return (
                 <tr key={"filaTabla" + id + index} className='bg-slate-500'>
-                  {row.columns.map((column, index) => {
-                    return (<th key={"columnaTabla" + id + index} className='border border-gray-700'>{column.label}</th>)
+                  {header.keyName.map((key, index) => {
+                    return (
+                      <th key={"columnaTabla" + id + index} className='border border-gray-700'>{row[key]}</th>
+                    )
                   })}
+
+                  {
+                    buttonGroup.length > 0 &&
+                    <th className='border border-gray-700'>
+                      <ButtonGroup id={row.id ?? index} buttonList={buttonGroup} equalPadding={true} />
+                    </th>
+                  }
                 </tr>)
             }
           })}

@@ -1,7 +1,80 @@
 import React from 'react'
 import { ButtonGroupOptions } from '../interfaces/UI-types'
+import { equal } from 'assert'
 
-export default function ButtonGroup({ buttonList, className, id }: { buttonList: ButtonGroupOptions[], className?: string, id: string }) {
+function ButtonLeft({ btn, equalPadding, id }: { btn: ButtonGroupOptions, equalPadding?: boolean, id: string | number }) {
+    if (equalPadding) {
+        return (
+            <button onClick={(e) => btn.function(e, id)}
+                className={`inline-block rounded-l bg-${btn.color} p-2.5 leading-none text-xs font-medium uppercase text-white transition duration-150 ease-in-out hover:bg-${btn.color}-600 focus:bg-${btn.color} focus:outline-none focus:ring-0 active:bg-${btn.color}-700`}
+                data-te-ripple-init
+                data-te-ripple-color="light">
+                {btn.label}
+                {btn && btn.icon}
+            </button>
+        )
+    } else {
+        return (
+            <button onClick={(e) => btn.function(e, id)}
+                className={`inline-block rounded-l bg-${btn.color} px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-${btn.color}-600 focus:bg-${btn.color}-600 focus:outline-none focus:ring-0 active:bg-${btn.color}-700`}
+                data-te-ripple-init
+                data-te-ripple-color="light">
+                {btn.label}
+                {btn && btn.icon}
+            </button>
+        )
+    }
+}
+
+function ButtonRight({ btn, equalPadding, id }: { btn: ButtonGroupOptions, equalPadding?: boolean, id: string | number }) {
+    if (equalPadding) {
+        return (
+            <button onClick={(e) => btn.function(e, id)}
+                className={`inline-block rounded-r bg-${btn.color} p-2.5 leading-none text-xs font-medium uppercase text-white transition duration-150 ease-in-out hover:bg-${btn.color}-600 focus:bg-${btn.color}-600 focus:outline-none focus:ring-0 active:bg-${btn.color}-700`}
+                data-te-ripple-init
+                data-te-ripple-color="light">
+                {btn.label}
+                {btn && btn.icon}
+            </button>
+        )
+    } else {
+        return (
+            <button onClick={(e) => btn.function(e, id)}
+                className={`inline-block rounded-r bg-${btn.color} px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-${btn.color}-600 focus:bg-${btn.color}-600 focus:outline-none focus:ring-0 active:bg-${btn.color}-700`}
+                data-te-ripple-init
+                data-te-ripple-color="light">
+                {btn.label}
+                {btn && btn.icon}
+            </button>
+        )
+    }
+}
+
+function ButtonCenter({ btn, equalPadding, id }: { btn: ButtonGroupOptions, equalPadding?: boolean, id: string | number }) {
+    if (equalPadding) {
+        return (
+            <button onClick={(e) => btn.function(e, id)}
+                className={`inline-block bg-${btn.color} p-2.5 leading-none text-xs font-medium uppercase text-white transition duration-150 ease-in-out hover:bg-${btn.color}-600 focus:bg-${btn.color}-600 focus:outline-none focus:ring-0 active:bg-${btn.color}-700`}
+                data-te-ripple-init
+                data-te-ripple-color="light">
+                {btn.label}
+                {btn && btn.icon}
+            </button>
+        )
+    } else {
+        return (
+            <button onClick={(e) => btn.function(e, id)}
+                className={`inline-block bg-${btn.color}-400 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-${btn.color}-600 focus:bg-${btn.color}-600 focus:outline-none focus:ring-0 active:bg-${btn.color}-700`}
+                data-te-ripple-init
+                data-te-ripple-color="light">
+                {btn.label}
+                {btn && btn.icon}
+            </button>
+        )
+    }
+}
+
+export default function ButtonGroup({ buttonList, className, id, equalPadding }: { buttonList: ButtonGroupOptions[], className?: string, id: string | number, equalPadding?: boolean }) {
 
     if (buttonList.length > 1) {
         return (
@@ -11,30 +84,15 @@ export default function ButtonGroup({ buttonList, className, id }: { buttonList:
                 {buttonList.map((btn, index, arr) => {
                     if (index == 0) {
                         return (
-                            <button key={"Button" + id + btn.label}
-                                className="inline-block rounded-l bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700"
-                                data-te-ripple-init
-                                data-te-ripple-color="light">
-                                {btn.label}
-                            </button>
+                            <ButtonLeft key={"Button" + id + index} id={id} equalPadding={equalPadding} btn={btn} />
                         )
                     } else if (arr.length - 1 == index) {
                         return (
-                            <button key={"Button" + id + btn.label}
-                                className="inline-block rounded-r bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700"
-                                data-te-ripple-init
-                                data-te-ripple-color="light">
-                                {btn.label}
-                            </button>
+                            <ButtonRight key={"Button" + id + index} id={id} equalPadding={equalPadding} btn={btn} />
                         )
                     } else {
                         return (
-                            <button key={"Button" + id + btn.label}
-                                className="inline-block bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700"
-                                data-te-ripple-init
-                                data-te-ripple-color="light">
-                                {btn.label}
-                            </button>
+                            <ButtonCenter key={"Button" + id + index} id={id} equalPadding={equalPadding} btn={btn} />
                         )
                     }
                 })}
@@ -46,12 +104,7 @@ export default function ButtonGroup({ buttonList, className, id }: { buttonList:
             role="group">
             {buttonList.map((btn) => {
                 return (
-                    <button key={"Button" + id + btn.label}
-                        className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700"
-                        data-te-ripple-init
-                        data-te-ripple-color="light">
-                        {btn.label}
-                    </button>
+                    <ButtonCenter key={"Button" + id + btn.label} id={id} equalPadding={equalPadding} btn={btn} />
                 )
             })}
         </div>)

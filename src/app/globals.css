@@ -8,6 +8,14 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+.Input-Focused {
+  outline: #06b6d4 2px solid;
+}
+
+.Input-Desfocused {
+  outline: #67e8f9 1px solid;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -24,4 +32,14 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+@keyframes aparecerFondoModal {
+  0% {
+    background: transparent !important;
+  }
+
+  100% {
+    background: var(--bg-fondo-modal);
+  }
 }

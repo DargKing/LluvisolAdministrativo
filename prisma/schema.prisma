@@ -1,0 +1,35 @@
+datasource db {
+    url      = "mysql://root:24092004@0.0.0.0:3306/test"
+    provider = "mysql"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Entrada {
+    id        Int      @id @default(autoincrement())
+    cantidad  Int
+    item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+    itemId    Int
+    createdAt DateTime @default(now())
+}
+
+model Salida {
+    id       Int  @id @default(autoincrement())
+    cantidad Int
+    item     Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+    itemId   Int
+    createdAt DateTime @default(now())
+}
+
+model Item {
+    id              Int       @id @default(autoincrement())
+    codigo          String    @unique
+    descripcion     String
+    cantidadInicial Int
+    cantidadActual  Int
+    entradas        Entrada[]
+    salidas         Salida[]
+    createdAt       DateTime  @default(now())
+}

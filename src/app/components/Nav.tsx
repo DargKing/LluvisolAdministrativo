@@ -14,8 +14,8 @@ export default function Nav() {
 
     useEffect(() => {
         const init = async () => {
-            const { Collapse, Ripple, initTE } = await import("tw-elements")
-            initTE({ Collapse, Ripple })
+            const { Collapse, Ripple, Select, initTE } = await import("tw-elements")
+            initTE({ Collapse, Ripple, Select })
         }
         init()
     }, [])
