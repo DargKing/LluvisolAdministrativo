@@ -1,5 +1,5 @@
 datasource db {
-    url      = "mysql://root:24092004@0.0.0.0:3306/test"
+    url      = "mysql://root:aDAgfF3gdefcFA-a6cdeFGAGb2f5gDde@roundhouse.proxy.rlwy.net:57047/railway" // URL de la base de datos 
     provider = "mysql"
 }
 
