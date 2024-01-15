@@ -43,3 +43,14 @@ body {
     background: var(--bg-fondo-modal);
   }
 }
+
+@keyframes aparecerCardDelModal {
+
+  0% {
+    top: initial;
+  }
+
+  100% {
+    top: 0;
+  }
+}

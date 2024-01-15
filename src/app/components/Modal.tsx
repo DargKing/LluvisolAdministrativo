@@ -21,12 +21,14 @@ export default function Modal({
     const desaparecerModal = () => {
         if (fondoModal.current) {
             let temp = (fondoModal.current as unknown as HTMLDivElement)
-            temp.classList.add("animate-[aparecerFondoModal_0.6s_ease-in_reverse_1]")
-            temp.classList.remove("animate-[aparecerFondoModal_0.2s_ease-in_1]")
-            
+            temp.classList.remove("bg-[--bg-fondo-modal]")
+            temp.classList.add("animate-[aparecerFondoModal_0.2s_ease-in_reverse_1]")
+
             setTimeout(() => {
+                temp.classList.remove("animate-[aparecerFondoModal_0.2s_ease-in_reverse_1]")
                 temp.classList.replace("block", "hidden")
-            }, 600)
+                temp.classList.add("animate-[aparecerFondoModal_0.2s_ease-out_forwards_1]")
+            }, 200)
         }
     }
 
@@ -40,13 +42,18 @@ export default function Modal({
 
     return (
         <div
-            className="animate-[aparecerFondoModal_0.2s_ease-in_forwards_1] [--bg-fondo-modal:#00000076] fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+            className="animate-[aparecerFondoModal_0.2s_ease-out_forwards_1] [--bg-fondo-modal:#00000076] fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
             id="exampleModalComponents"
-            tabIndex={-1} ref={fondoModal}>
+            tabIndex={-1} ref={fondoModal} onAnimationEnd={(e) => {
+                if(activado){
+                    e.currentTarget.classList.add("bg-[--bg-fondo-modal]")
+                    e.currentTarget.classList.remove("animate-[aparecerFondoModal_0.2s_ease-out_forwards_1]")
+                }
+            }}>
             <div
                 className="pointer-events-none relative w-auto opacity-100 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:my-7 min-[576px]:max-w-[500px]">
                 <div
-                    className="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
+                    className="animate-[aparecerCardDelModal_0.2s_ease-out_forwards_1] top-[calc(-100% - 1.75rem)]; min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
                     <div
                         className="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
                         <h5
